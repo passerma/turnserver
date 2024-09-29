@@ -17,7 +17,7 @@ createConf() {
   cat <<EOF >>/etc/turnserver.conf
 listening-device=eth0
 listening-port=3478
-listening-ip=0.0.0.0
+listening-ip=$listening_ip
 external-ip=$EXTERNAL_IP
 fingerprint
 lt-cred-mech
@@ -29,9 +29,15 @@ no-tlsv1_2
 EOF
 }
 
+getEth0Ip() {
+  ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1
+}
+
 echo "====== 配置 turnserver ======"
 
 user_tmp=${TURN_USERNAME:-"user"}:${TURN_PASSWORD:-"pass"}
+listening_ip=$(getEth0Ip)
+
 if [ ! -f /etc/turnserver.conf ]; then
   echo "创建 /etc/turnserver.conf 配置文件"
   createConf
