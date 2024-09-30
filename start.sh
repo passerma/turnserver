@@ -22,7 +22,7 @@ external-ip=$EXTERNAL_IP
 fingerprint
 lt-cred-mech
 user=$user_tmp
-realm=localhost
+realm=$listening_ip
 no-tlsv1
 no-tlsv1_1
 no-tlsv1_2
@@ -49,4 +49,4 @@ else
   echo "====== 启动 turnserver ======"
 fi
 
-exec turnserver -v -c /etc/turnserver.conf
+exec turnserver -c /etc/turnserver.conf
