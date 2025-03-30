@@ -24,18 +24,21 @@ docker run -itd --name turnserver -p 3478:3478 -p 3478:3478/udp passerma/turnser
 
 ### 带参数运行
 
-支持修改公网 ip、用户名、密码
+支持修改`公网 ip、用户名、密码`
+
+支持挂载配置文件目录
 
 ```sh
-docker run -itd --name turnserver \
+docker run -d --name turnserver \
 -e EXTERNAL_IP=1.25.23.21 -e TURN_USERNAME=myuser -e TURN_PASSWORD=mypass \
 -p 3478:3478 -p 3478:3478/udp \
+-v /home/turn:/etc/turn \
 passerma/turnserver
 ```
 
 ## 配置文件
 
-文件位置 **/etc/turnserver.conf**
+文件位置 **/etc/turn/turnserver.conf**
 
 默认用户名密码 user:pass
 

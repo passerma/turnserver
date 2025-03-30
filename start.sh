@@ -14,7 +14,7 @@ createConf() {
     echo "EXTERNAL_IP 已经设置为: $EXTERNAL_IP"
   fi
 
-  cat <<EOF >>/etc/turnserver.conf
+  cat <<EOF >>/etc/turn/turnserver.conf
 listening-device=eth0
 listening-port=3478
 listening-ip=$listening_ip
@@ -36,17 +36,20 @@ getEth0Ip() {
 echo "====== 配置 turnserver ======"
 
 user_tmp=${TURN_USERNAME:-"user"}:${TURN_PASSWORD:-"pass"}
+
 listening_ip=$(getEth0Ip)
 
-if [ ! -f /etc/turnserver.conf ]; then
-  echo "创建 /etc/turnserver.conf 配置文件"
+if [ ! -f /etc/turn/turnserver.conf ]; then
+  echo "创建 /etc/turn/turnserver.conf 配置文件"
+  mkdir -p /etc/turn
   createConf
   echo "====== 启动 turnserver ======"
   echo "external-ip=$EXTERNAL_IP"
+  echo "listening-ip=$listening_ip"
   echo "user=$user_tmp"
 else
-  echo "/etc/turnserver.conf 配置文件已存在"
+  echo "/etc/turn/turnserver.conf 配置文件已存在"
   echo "====== 启动 turnserver ======"
 fi
 
-exec turnserver -c /etc/turnserver.conf
+exec turnserver -c /etc/turn/turnserver.conf
