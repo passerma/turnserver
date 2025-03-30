@@ -19,7 +19,7 @@ docker pull passerma/turnserver
 ### 直接运行
 
 ```sh
-docker run -itd --name turnserver -p 3478:3478 -p 3478:3478/udp passerma/turnserver
+docker run -d --name turnserver -p 3478:3478 -p 3478:3478/udp passerma/turnserver
 ```
 
 ### 带参数运行
